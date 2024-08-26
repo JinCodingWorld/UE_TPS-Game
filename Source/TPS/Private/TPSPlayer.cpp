@@ -98,8 +98,8 @@ void ATPSPlayer::BeginPlay()
 	// 시작할 때 두 개의 위젯을 생성한다.
 	CrosshairUI = CreateWidget(GetWorld(), CrosshariUIfactory);
 	SniperUI = CreateWidget(GetWorld(), SniperUIfactory);
-	
-	//
+	// 일반 조준 모드 CrosshairUI 화면에 표시
+	CrosshairUI->AddToViewport();
 
 	auto pc = Cast<APlayerController>(Controller);
 	if (pc)
@@ -275,6 +275,7 @@ void ATPSPlayer::SniperAim(const FInputActionValue& inputValue)
 		// 스나이퍼 조준 UI 등록
 		SniperUI->AddToViewport();
 		CameraComp->SetFieldOfView(45.0f);
+		CrosshairUI->RemoveFromParent();
 	}
 	// Released(Completed) 입력 처리
 	else
@@ -284,8 +285,7 @@ void ATPSPlayer::SniperAim(const FInputActionValue& inputValue)
 		// 스나이퍼 조준 UI 화면모드 제거
 		SniperUI->RemoveFromParent();
 		CameraComp->SetFieldOfView(90.0f);
+		CrosshairUI->AddToViewport();
 	}
-
-
 }
 
